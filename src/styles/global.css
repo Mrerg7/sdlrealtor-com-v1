@@ -5,8 +5,13 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    @apply overflow-x-hidden;
+    -webkit-text-size-adjust: 100%;
+  }
+
   body {
-    @apply bg-slate-50 text-slate-800 font-sans antialiased;
+    @apply bg-slate-50 text-slate-800 font-sans antialiased overflow-x-hidden;
   }
 }
 
@@ -18,9 +23,14 @@
   }
 
   .domain-name {
-    font-size: clamp(3.2rem, 8vw, 6.5rem);
-    line-height: 1;
+    font-size: clamp(2.25rem, 10vw, 6.5rem);
+    line-height: 1.05;
     letter-spacing: -0.04em;
+    word-break: break-word;
+  }
+
+  .section-heading {
+    @apply text-3xl sm:text-4xl lg:text-5xl tracking-tighter font-semibold;
   }
 
   .value-card {
