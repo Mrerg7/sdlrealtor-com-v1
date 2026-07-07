@@ -1,0 +1,61 @@
+---
+import { ACQUISITION_MAILTO, SITE } from '../config/site';
+---
+
+<section id="acquire" class="bg-slate-900 py-16">
+  <div class="max-w-3xl mx-auto px-6 text-center">
+    <div class="inline px-4 py-1 rounded-3xl bg-white/10 text-white text-xs tracking-[1.5px] font-medium mb-4">
+      SERIOUS INQUIRIES ONLY
+    </div>
+    <h2 class="text-white text-4xl md:text-5xl tracking-tighter font-semibold">
+      Ready to own sdlrealtor.com?
+    </h2>
+    <p class="mt-4 text-white/70 max-w-md mx-auto">
+      Premium real estate domains that convey authority in top luxury markets like Scottsdale are rare.
+      Contact us for prompt, confidential discussion.
+    </p>
+
+    <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+      <a
+        href={ACQUISITION_MAILTO}
+        class="inline-flex items-center justify-center gap-x-3 px-10 py-4 bg-white text-slate-900 hover:bg-amber-50 font-semibold text-lg rounded-3xl transition-all active:scale-[0.985] shadow-xl"
+      >
+        <span>Inquire About Acquisition</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        </svg>
+      </a>
+
+      <button
+        id="copy-email-btn"
+        type="button"
+        class="inline-flex items-center justify-center gap-x-3 px-8 py-4 border border-white/30 hover:bg-white/10 text-white font-semibold text-lg rounded-3xl transition-all"
+      >
+        <span id="copy-btn-text">Copy {SITE.email}</span>
+      </button>
+    </div>
+
+    <p class="mt-8 text-sm text-white/50">
+      We typically respond within 24–48 hours. All inquiries are confidential.
+    </p>
+  </div>
+</section>
+
+<script define:vars={{ email: SITE.email }}>
+  function copyEmail() {
+    navigator.clipboard.writeText(email).then(() => {
+      const btn = document.getElementById('copy-btn-text');
+      if (btn) {
+        const original = btn.textContent;
+        btn.textContent = 'Copied to clipboard!';
+        setTimeout(() => {
+          btn.textContent = original;
+        }, 2200);
+      }
+    }).catch(() => {
+      window.location.href = `mailto:${email}`;
+    });
+  }
+
+  document.getElementById('copy-email-btn')?.addEventListener('click', copyEmail);
+</script>

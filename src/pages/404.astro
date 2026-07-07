@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { ACQUISITION_MAILTO } from '../config/site';
+---
+
+<BaseLayout title="Page Not Found | sdlrealtor.com" noindex>
+  <div class="min-h-screen flex flex-col items-center justify-center px-6 bg-slate-50 text-center">
+    <p class="text-6xl font-bold tracking-tighter text-slate-900">404</p>
+    <h1 class="mt-4 text-2xl font-semibold">Page not found</h1>
+    <p class="mt-2 text-slate-600 max-w-md">
+      The page you're looking for doesn't exist. Return home or inquire about acquiring sdlrealtor.com.
+    </p>
+    <div class="mt-8 flex flex-wrap gap-4 justify-center">
+      <a href="/" class="px-6 py-3 bg-slate-900 text-white font-semibold rounded-3xl hover:bg-black transition-colors">
+        Back to Home
+      </a>
+      <a href={ACQUISITION_MAILTO} class="px-6 py-3 border border-slate-300 font-semibold rounded-3xl hover:bg-white transition-colors">
+        Inquire About Domain
+      </a>
+    </div>
+  </div>
+</BaseLayout>

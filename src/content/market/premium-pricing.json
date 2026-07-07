@@ -1,0 +1,10 @@
+{
+  "label": "MARKET STRENGTH",
+  "title": "Premium Pricing Power",
+  "stats": [
+    { "label": "Median Home Value", "value": "$737K – $860K+" },
+    { "label": "Recent Median Sale Price", "value": "~$919K" },
+    { "label": "Strong Demand in Luxury Segment", "value": "High" }
+  ],
+  "order": 1
+}
