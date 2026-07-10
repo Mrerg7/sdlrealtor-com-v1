@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { SITE, OG_IMAGE, ACQUISITION_MAILTO } from '../config/site';
+import { SITE, OG_IMAGE } from '../config/site';
 
 interface Props {
   title?: string;
@@ -41,30 +41,9 @@ const structuredData = {
       datePublished: publishedDate,
       dateModified: publishedDate,
       inLanguage: 'en-US',
-    },
-    {
-      '@type': 'Product',
-      '@id': `${SITE.url}#product`,
-      name: 'sdlrealtor.com Premium Domain Name',
-      description:
-        'The definitive premium domain for the most influential realtor or real estate brand in Scottsdale, Arizona. Available for acquisition.',
-      url: SITE.url,
-      image: OG_IMAGE,
-      category: 'Premium Domain Name',
-      brand: {
-        '@type': 'Brand',
-        name: 'sdlrealtor.com',
-      },
-      offers: {
-        '@type': 'Offer',
-        url: ACQUISITION_MAILTO,
-        priceCurrency: 'USD',
-        availability: 'https://schema.org/InStock',
-        seller: {
-          '@type': 'Organization',
-          name: 'SDL Domains',
-          email: SITE.email,
-        },
+      primaryImageOfPage: {
+        '@type': 'ImageObject',
+        url: OG_IMAGE,
       },
     },
     {
