@@ -1,64 +1,39 @@
 ---
-import { ACQUISITION_MAILTO, SITE } from '../config/site';
+import InquiryForm from './InquiryForm.astro';
+import { SITE } from '../config/site';
 ---
 
-<section id="acquire" class="bg-slate-900 py-12 sm:py-16">
-  <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center">
-    <div class="inline px-4 py-1 rounded-3xl bg-white/10 text-white text-xs tracking-[1.5px] font-medium mb-4">
-      SERIOUS INQUIRIES ONLY
+<section class="bg-slate-950" id="acquire" aria-labelledby="acquire-heading">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
+    <div class="grid lg:grid-cols-[0.9fr_1.1fr] gap-10 lg:gap-14 items-start">
+      <div>
+        <p class="inline-flex px-3 py-1 rounded-3xl bg-white/10 text-white text-xs tracking-[1.5px] font-medium">
+          SERIOUS INQUIRIES
+        </p>
+        <h2 id="acquire-heading" class="mt-4 text-white text-3xl sm:text-4xl md:text-5xl tracking-tighter font-semibold">
+          Ready to own sdlrealtor.com?
+        </h2>
+        <p class="mt-4 text-slate-300 max-w-md leading-relaxed">
+          One buyer gets the name. Tell us how you would use it. If your mail app is awkward on a phone,
+          the form still gives you a note you can copy to {SITE.email}.
+        </p>
+        <ul class="mt-6 space-y-3 text-sm text-slate-300">
+          <li>Confidential. We do not publish inquiries.</li>
+          <li>Typical reply within 24–48 hours.</li>
+          <li>Escrow-friendly transfer. Domain only, unless we agree otherwise.</li>
+        </ul>
+        <p class="mt-6 text-sm">
+          <a class="text-white font-semibold underline decoration-white/30 underline-offset-4 break-all" href={`mailto:${SITE.email}`}>
+            {SITE.email}
+          </a>
+        </p>
+      </div>
+
+      <div class="rounded-3xl bg-white p-5 sm:p-7 shadow-xl">
+        <h3 class="text-lg font-semibold tracking-tight text-slate-900">Make an offer</h3>
+        <p class="mt-1 mb-5 text-sm text-slate-500">Price is discussed privately. A number is optional.</p>
+        <InquiryForm id="inquiry" />
+      </div>
     </div>
-    <h2 class="text-white text-3xl sm:text-4xl md:text-5xl tracking-tighter font-semibold">
-      Ready to own sdlrealtor.com?
-    </h2>
-    <p class="mt-4 text-white/70 max-w-md mx-auto">
-      Premium real estate domains that convey authority in top luxury markets like Scottsdale are rare.
-      Contact us for prompt, confidential discussion.
-    </p>
-
-    <div class="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-      <a
-        href={ACQUISITION_MAILTO}
-        class="w-full sm:w-auto inline-flex items-center justify-center gap-x-3 px-8 sm:px-10 py-3.5 sm:py-4 bg-white text-slate-900 hover:bg-amber-50 font-semibold text-base sm:text-lg rounded-3xl transition-all active:scale-[0.985] shadow-xl"
-      >
-        <span>Inquire About Acquisition</span>
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-        </svg>
-      </a>
-
-      <button
-        id="copy-email-btn"
-        type="button"
-        class="w-full sm:w-auto inline-flex items-center justify-center gap-x-3 px-8 py-3.5 sm:py-4 border border-white/30 hover:bg-white/10 text-white font-semibold text-base sm:text-lg rounded-3xl transition-all"
-      >
-        <span id="copy-btn-text">
-          <span class="sm:hidden">Copy Email</span>
-          <span class="hidden sm:inline">Copy {SITE.email}</span>
-        </span>
-      </button>
-    </div>
-
-    <p class="mt-8 text-sm text-white/50">
-      We typically respond within 24–48 hours. All inquiries are confidential.
-    </p>
   </div>
 </section>
-
-<script define:vars={{ email: SITE.email }}>
-  function copyEmail() {
-    navigator.clipboard.writeText(email).then(() => {
-      const btn = document.getElementById('copy-btn-text');
-      if (btn) {
-        const original = btn.innerHTML;
-        btn.innerHTML = 'Copied!';
-        setTimeout(() => {
-          btn.innerHTML = original;
-        }, 2200);
-      }
-    }).catch(() => {
-      window.location.href = `mailto:${email}`;
-    });
-  }
-
-  document.getElementById('copy-email-btn')?.addEventListener('click', copyEmail);
-</script>

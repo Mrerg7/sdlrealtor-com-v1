@@ -1,13 +1,13 @@
 ---
-import { ACQUISITION_MAILTO, cfImageUrl, CF_IMAGES } from '../config/site';
+import { cfImageUrl, CF_IMAGES } from '../config/site';
 
 const heroImage = cfImageUrl(CF_IMAGES.heroImageId);
 ---
 
-<header class="relative min-h-[min(720px,92svh)] flex items-end sm:items-center overflow-hidden bg-slate-950">
+<header class="relative min-h-[min(680px,88svh)] flex items-end sm:items-center overflow-hidden bg-slate-950">
   <img
     src={heroImage}
-    alt="Scottsdale luxury real estate — desert estate and mountain views"
+    alt="Scottsdale desert estate and mountain views — the setting for the sdlrealtor.com domain"
     class="absolute inset-0 w-full h-full object-cover object-[center_30%] sm:object-[center_35%]"
     width="1920"
     height="1080"
@@ -15,32 +15,17 @@ const heroImage = cfImageUrl(CF_IMAGES.heroImageId);
     decoding="async"
   />
 
-  <!-- Light top vignette for nav contrast -->
-  <div class="absolute inset-0 bg-gradient-to-b from-slate-950/50 via-transparent to-transparent pointer-events-none" aria-hidden="true"></div>
+  <div class="absolute inset-0 bg-gradient-to-b from-slate-950/55 via-transparent to-transparent pointer-events-none" aria-hidden="true"></div>
+  <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/55 to-slate-950/20 sm:hidden pointer-events-none" aria-hidden="true"></div>
+  <div class="absolute inset-0 hidden sm:block bg-gradient-to-r from-slate-950/88 via-slate-950/50 to-transparent pointer-events-none" aria-hidden="true"></div>
+  <div class="absolute inset-0 hidden sm:block bg-gradient-to-t from-slate-950/40 via-transparent to-transparent pointer-events-none" aria-hidden="true"></div>
 
-  <!-- Mobile: bottom-weighted scrim keeps image visible above -->
-  <div
-    class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/55 to-slate-950/15 sm:hidden pointer-events-none"
-    aria-hidden="true"
-  ></div>
-
-  <!-- Desktop: left text panel only — image stays visible on the right -->
-  <div
-    class="absolute inset-0 hidden sm:block bg-gradient-to-r from-slate-950/85 via-slate-950/45 to-transparent pointer-events-none"
-    aria-hidden="true"
-  ></div>
-  <div
-    class="absolute inset-0 hidden sm:block bg-gradient-to-t from-slate-950/40 via-transparent to-transparent pointer-events-none"
-    aria-hidden="true"
-  ></div>
-
-  <div class="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 pb-10 sm:pb-0 pt-24 sm:pt-8">
+  <div class="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 pb-24 sm:pb-0 pt-24 sm:pt-8">
     <div class="max-w-3xl">
-      <div class="inline-flex items-center gap-x-2 bg-white/10 backdrop-blur-md border border-white/20 px-3 sm:px-4 py-1.5 rounded-3xl mb-6 sm:mb-8 max-w-full">
-        <div class="w-1.5 h-1.5 shrink-0 bg-emerald-400 rounded-full animate-pulse"></div>
-        <span class="text-[10px] sm:text-xs font-semibold tracking-[1px] sm:tracking-[1.5px] text-white/90 leading-snug">
-          <span class="sm:hidden">PREMIUM SCOTTSDALE REAL ESTATE DOMAIN</span>
-          <span class="hidden sm:inline">PREMIUM REAL ESTATE DOMAIN • SCOTTSDALE'S LUXURY MARKET</span>
+      <div class="inline-flex items-center gap-x-2 bg-white/10 backdrop-blur-md border border-white/20 px-3 sm:px-4 py-1.5 rounded-3xl mb-5 sm:mb-7 max-w-full">
+        <div class="w-1.5 h-1.5 shrink-0 bg-emerald-400 rounded-full live-dot"></div>
+        <span class="text-[11px] sm:text-xs font-semibold tracking-[1px] sm:tracking-[1.5px] text-white/90">
+          DOMAIN FOR SALE · SCOTTSDALE
         </span>
       </div>
 
@@ -49,42 +34,40 @@ const heroImage = cfImageUrl(CF_IMAGES.heroImageId);
       </h1>
 
       <p class="mt-3 sm:mt-4 max-w-xl text-lg sm:text-2xl text-white/90 tracking-tight leading-snug">
-        The definitive premium domain for the most influential realtor
-        <span class="hidden sm:inline"><br /></span>
-        <span class="sm:hidden"> </span>
-        in Scottsdale — Arizona's rarest and most desirable luxury market.
+        The exact-match .com for a Scottsdale realtor who wants the name to do the introducing.
       </p>
 
-      <div class="mt-7 sm:mt-9 flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
+      <div class="mt-7 sm:mt-9 flex flex-col sm:flex-row gap-3 sm:gap-4">
         <a
-          href={ACQUISITION_MAILTO}
-          class="w-full sm:w-auto text-center px-8 sm:px-10 py-3.5 sm:py-4 bg-white text-slate-900 hover:bg-amber-50 font-semibold rounded-3xl text-base transition-all active:scale-[0.985] shadow-xl"
+          href="#inquiry"
+          class="w-full sm:w-auto text-center inline-flex items-center justify-center min-h-12 px-8 sm:px-10 py-3 bg-white text-slate-900 hover:bg-amber-50 font-semibold rounded-3xl text-base shadow-xl"
         >
-          Inquire to Purchase
+          Make an Offer
         </a>
         <a
-          href="#market"
-          class="w-full sm:w-auto text-center px-8 py-3.5 sm:py-4 border border-white/30 hover:bg-white/10 text-white font-semibold rounded-3xl text-base transition-all"
+          href="/acquire/"
+          class="w-full sm:w-auto text-center inline-flex items-center justify-center min-h-12 px-8 py-3 border border-white/30 hover:bg-white/10 text-white font-semibold rounded-3xl text-base"
         >
-          Explore the Scottsdale Market
+          How buying works
         </a>
       </div>
 
-      <div class="mt-6 sm:mt-8 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-y-1 sm:gap-x-6 text-xs text-white/60">
-        <div>Short • Authoritative • Instantly Brandable</div>
-        <div class="hidden sm:block w-px h-3 bg-white/30"></div>
-        <div>Scottsdale Luxury Real Estate</div>
-      </div>
+      <ul class="mt-6 sm:mt-8 flex flex-col sm:flex-row sm:flex-wrap gap-y-1.5 sm:gap-x-5 text-xs sm:text-sm text-white/70">
+        <li>11 letters · no hyphen · .com</li>
+        <li>Price on request</li>
+        <li>Escrow transfer · reply in 24–48 hours</li>
+      </ul>
     </div>
   </div>
 </header>
 
 <div class="border-b border-slate-200 bg-white">
   <div class="max-w-5xl mx-auto px-4 sm:px-6 py-4 sm:py-5">
-    <div class="flex flex-col sm:flex-row sm:flex-wrap justify-center md:justify-between items-center gap-y-2 sm:gap-y-3 sm:gap-x-8 text-sm text-center md:text-left">
-      <div>Scottsdale: Arizona's premier luxury real estate market</div>
-      <div class="hidden md:block text-slate-300">•</div>
-      <div>High-value properties • Affluent buyers • Strong demand</div>
-    </div>
+    <p class="text-sm text-center md:text-left text-slate-700">
+      <span class="font-semibold text-slate-900">SDL</span> is the airport code for Scottsdale.
+      <a href="/scottsdale-realtor-domain/" class="font-semibold text-amber-brand hover:text-amber-700">
+        See why the name carries
+      </a>
+    </p>
   </div>
 </div>

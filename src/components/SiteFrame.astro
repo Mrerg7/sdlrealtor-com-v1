@@ -1,0 +1,71 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from './Nav.astro';
+import Footer from './Footer.astro';
+import StickyOffer from './StickyOffer.astro';
+import Breadcrumbs from './Breadcrumbs.astro';
+import { SITE } from '../config/site';
+
+interface Crumb {
+  name: string;
+  href: string;
+}
+
+interface Props {
+  title?: string;
+  description?: string;
+  crumbs?: Crumb[];
+  extraGraph?: Record<string, unknown>[];
+  preloadImage?: string;
+}
+
+const {
+  title = SITE.title,
+  description = SITE.description,
+  crumbs = [],
+  extraGraph = [],
+  preloadImage,
+} = Astro.props;
+
+const breadcrumbGraph =
+  crumbs.length > 0
+    ? {
+        '@type': 'BreadcrumbList',
+        '@id': `${new URL(Astro.url.pathname, SITE.url).href}#breadcrumb`,
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: SITE.url,
+          },
+          ...crumbs.map((crumb, index) => ({
+            '@type': 'ListItem',
+            position: index + 2,
+            name: crumb.name,
+            item: new URL(crumb.href, SITE.url).href,
+          })),
+        ],
+      }
+    : null;
+
+const graph = breadcrumbGraph ? [...extraGraph, breadcrumbGraph] : extraGraph;
+const showSticky = !Astro.url.pathname.startsWith('/acquire');
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  extraGraph={graph}
+  preloadImage={preloadImage}
+  stickyPad={showSticky}
+>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <Nav />
+  {crumbs.length > 0 && <Breadcrumbs crumbs={crumbs} />}
+  <main id="main">
+    <slot />
+  </main>
+  <Footer />
+  {showSticky && <StickyOffer />}
+</BaseLayout>

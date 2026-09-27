@@ -1,29 +1,24 @@
 ---
-import { ACQUISITION_MAILTO } from '../config/site';
+import { ACQUISITION_MAILTO, NAV_LINKS } from '../config/site';
 
-const navLinks = [
-  { href: '#why', label: 'Why This Domain' },
-  { href: '#perfect-for', label: 'Perfect For' },
-  { href: '#market', label: 'Scottsdale Market' },
-  { href: '#acquire', label: 'Acquire' },
-];
+const offerHref = Astro.url.pathname === '/' ? '/#inquiry' : '/acquire/#inquiry';
 ---
 
-<nav class="bg-white/95 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50">
+<nav class="bg-white/95 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50" aria-label="Primary">
   <div class="max-w-6xl mx-auto px-4 sm:px-6">
     <div class="flex justify-between items-center h-16 sm:h-20">
       <a href="/" class="flex items-center gap-x-2 sm:gap-x-3 min-w-0">
-        <div class="w-8 h-8 sm:w-9 sm:h-9 shrink-0 bg-slate-900 rounded-2xl flex items-center justify-center">
-          <span class="text-white font-bold text-lg sm:text-xl tracking-tighter">SDL</span>
+        <div class="w-9 h-9 shrink-0 bg-slate-900 rounded-2xl flex items-center justify-center" aria-hidden="true">
+          <span class="text-white font-bold text-lg tracking-tighter">SDL</span>
         </div>
         <div class="font-semibold text-base sm:text-xl tracking-tighter text-slate-900 truncate">
           sdlrealtor<span class="text-amber-brand">.</span>com
         </div>
       </a>
 
-      <div class="hidden md:flex items-center gap-x-8 text-sm font-medium">
+      <div class="hidden lg:flex items-center gap-x-6 text-sm font-medium">
         {
-          navLinks.map((link) => (
+          NAV_LINKS.map((link) => (
             <a href={link.href} class="nav-link text-slate-600 hover:text-slate-900">
               {link.label}
             </a>
@@ -31,25 +26,18 @@ const navLinks = [
         }
       </div>
 
-      <div class="flex items-center gap-x-2 sm:gap-x-3 shrink-0">
+      <div class="flex items-center gap-x-2 shrink-0">
         <a
-          href="https://sdl.contact"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="hidden md:inline text-xs px-4 py-2 border border-slate-300 hover:bg-slate-100 rounded-3xl font-medium text-slate-600 transition-colors"
+          href={offerHref}
+          class="inline-flex items-center justify-center h-11 px-3.5 sm:px-5 bg-slate-900 hover:bg-black text-white text-sm font-semibold rounded-2xl"
         >
-          SDL Portfolio
-        </a>
-        <a
-          href={ACQUISITION_MAILTO}
-          class="hidden sm:inline-flex px-4 sm:px-6 py-2 sm:py-2.5 bg-slate-900 hover:bg-black text-white text-xs sm:text-sm font-semibold rounded-3xl transition-all active:scale-[0.985]"
-        >
-          Make an Offer
+          <span class="sm:hidden">Offer</span>
+          <span class="hidden sm:inline">Make an Offer</span>
         </a>
         <button
           type="button"
           id="mobile-menu-btn"
-          class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-2xl border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors"
+          class="lg:hidden inline-flex items-center justify-center w-11 h-11 rounded-2xl border border-slate-200 text-slate-700 hover:bg-slate-50"
           aria-expanded="false"
           aria-controls="mobile-menu"
           aria-label="Open navigation menu"
@@ -65,17 +53,13 @@ const navLinks = [
     </div>
   </div>
 
-  <div
-    id="mobile-menu"
-    class="hidden md:hidden border-t border-slate-200 bg-white/98 backdrop-blur-md"
-    aria-hidden="true"
-  >
-    <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-1">
+  <div id="mobile-menu" class="hidden lg:hidden border-t border-slate-200 bg-white" aria-hidden="true">
+    <div class="max-w-6xl mx-auto px-4 py-3 pb-6 flex flex-col gap-1">
       {
-        navLinks.map((link) => (
+        NAV_LINKS.map((link) => (
           <a
             href={link.href}
-            class="mobile-nav-link block px-4 py-3 rounded-2xl text-slate-700 font-medium hover:bg-slate-50 active:bg-slate-100"
+            class="mobile-nav-link block px-4 py-3 rounded-2xl text-slate-800 font-medium hover:bg-slate-50"
           >
             {link.label}
           </a>
@@ -83,17 +67,9 @@ const navLinks = [
       }
       <a
         href={ACQUISITION_MAILTO}
-        class="mt-2 block text-center px-4 py-3.5 bg-slate-900 text-white font-semibold rounded-2xl hover:bg-black transition-colors"
+        class="mobile-nav-link mt-1 block text-center px-4 py-3 border border-slate-200 text-slate-700 font-medium rounded-2xl"
       >
-        Make an Offer
-      </a>
-      <a
-        href="https://sdl.contact"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="block text-center px-4 py-3 border border-slate-200 text-slate-600 font-medium rounded-2xl hover:bg-slate-50"
-      >
-        SDL Portfolio
+        Email sales@desertrich.com
       </a>
     </div>
   </div>
@@ -112,12 +88,12 @@ const navLinks = [
     menuBtn?.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
     iconOpen?.classList.toggle('hidden', open);
     iconClose?.classList.toggle('hidden', !open);
-    document.body.classList.toggle('overflow-hidden', open);
+    document.body.classList.toggle('menu-open', open);
   }
 
   menuBtn?.addEventListener('click', () => {
-    const isOpen = menu?.classList.contains('hidden') ?? true;
-    setMenuOpen(isOpen);
+    const isClosed = menu?.classList.contains('hidden') ?? true;
+    setMenuOpen(isClosed);
   });
 
   document.querySelectorAll('.mobile-nav-link').forEach((link) => {
@@ -125,6 +101,6 @@ const navLinks = [
   });
 
   window.addEventListener('resize', () => {
-    if (window.innerWidth >= 768) setMenuOpen(false);
+    if (window.innerWidth >= 1024) setMenuOpen(false);
   });
 </script>

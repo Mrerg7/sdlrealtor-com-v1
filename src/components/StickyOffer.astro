@@ -1,0 +1,19 @@
+---
+const path = Astro.url.pathname;
+const href = path === '/' ? '/#inquiry' : path.startsWith('/acquire') ? '#inquiry' : '/acquire/#inquiry';
+---
+
+<div class="sticky-offer md:hidden fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white/95 backdrop-blur-md">
+  <div class="px-4 pt-2.5 pb-[max(0.7rem,env(safe-area-inset-bottom))] flex items-center gap-3">
+    <div class="min-w-0">
+      <p class="text-[11px] uppercase tracking-[1.5px] text-amber-brand font-semibold">For sale</p>
+      <p class="text-sm font-semibold text-slate-900 truncate">sdlrealtor.com</p>
+    </div>
+    <a
+      href={href}
+      class="ml-auto shrink-0 inline-flex items-center justify-center h-11 px-5 rounded-2xl bg-slate-900 text-white text-sm font-semibold"
+    >
+      Make an Offer
+    </a>
+  </div>
+</div>

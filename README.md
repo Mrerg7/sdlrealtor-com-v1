@@ -1,16 +1,21 @@
 # sdlrealtor.com
 
-Premium domain sales page for **sdlrealtor.com** — Scottsdale luxury real estate authority branding.
+Sales site for the domain **sdlrealtor.com** — a Scottsdale real estate brand name. The domain is for sale. This is not a brokerage.
 
 ## Stack
 
-- [Astro](https://astro.build) static site (`output: 'static'`, no Cloudflare adapter)
+- [Astro](https://astro.build) static site (`output: 'static'`)
 - TypeScript + Tailwind CSS
-- Astro Content Collections (`why`, `useCases`, `market`)
-- Cloudflare Workers **Static Assets** deploy via Wrangler
-- Cloudflare Images CDN for hero imagery
-- `@astrojs/sitemap` + `public/robots.txt`
-- JSON-LD structured data + full Open Graph meta
+- Cloudflare Workers Static Assets via Wrangler
+- `@astrojs/sitemap`, `public/robots.txt`, `public/llms.txt`
+- JSON-LD (WebSite, WebPage, Organization, FAQ, breadcrumbs). No Product rich-result markup, so a missing public price does not throw Search Console offer errors.
+
+## Pages
+
+- `/` sales homepage
+- `/acquire/` offer and transfer steps
+- `/scottsdale-realtor-domain/` why the name works
+- `/faq/` buyer questions
 
 ## Development
 
@@ -26,12 +31,10 @@ npm run build
 npm run deploy
 ```
 
-Deploys the `dist/` folder to Cloudflare Workers Static Assets (global edge, assets-only — no Worker script).
+## Acquisition
 
-## Acquisition Contact
-
-All CTAs route to **sales@desertrich.com**.
+Offers go to **sales@desertrich.com**. The form opens a mailto draft; the site does not store inquiries.
 
 ## Disclaimer
 
-This site is for demonstration and informational purposes only. It does not constitute an offer of services, a commitment to deploy, or a guarantee of outcomes.
+The domain name is offered for acquisition. The site does not provide real estate services, does not include a license or leads, and is not affiliated with the National Association of REALTORS®. The domain does not guarantee search rankings.

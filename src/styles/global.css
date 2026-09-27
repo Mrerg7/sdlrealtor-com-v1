@@ -1,17 +1,30 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   html {
-    @apply overflow-x-hidden;
+    @apply overflow-x-hidden scroll-smooth;
     -webkit-text-size-adjust: 100%;
   }
 
   body {
     @apply bg-slate-50 text-slate-800 font-sans antialiased overflow-x-hidden;
+  }
+
+  body.has-sticky-pad {
+    padding-bottom: calc(4.75rem + env(safe-area-inset-bottom));
+  }
+
+  @media (min-width: 768px) {
+    body.has-sticky-pad {
+      padding-bottom: 0;
+    }
+  }
+
+  :focus-visible {
+    outline: 2px solid #b45309;
+    outline-offset: 3px;
   }
 }
 
@@ -19,18 +32,45 @@
   .font-display {
     font-family: 'Playfair Display', Georgia, serif;
     font-weight: 700;
-    line-height: 1.05;
+    line-height: 1.08;
   }
 
   .domain-name {
-    font-size: clamp(2.25rem, 10vw, 6.5rem);
-    line-height: 1.05;
-    letter-spacing: -0.04em;
-    word-break: break-word;
+    font-size: clamp(2.35rem, 9.2vw, 6.25rem);
+    line-height: 0.98;
+    letter-spacing: -0.045em;
+    overflow-wrap: anywhere;
   }
 
   .section-heading {
     @apply text-3xl sm:text-4xl lg:text-5xl tracking-tighter font-semibold;
+  }
+
+  .field-label {
+    @apply block text-sm font-medium text-slate-700 mb-1.5;
+  }
+
+  .field-input {
+    @apply w-full min-h-12 px-4 rounded-2xl border border-slate-300 bg-white text-base text-slate-900;
+  }
+
+  .skip-link {
+    position: absolute;
+    left: 1rem;
+    top: -4rem;
+    z-index: 80;
+    border-radius: 0.75rem;
+    background: #fff;
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+  }
+
+  .skip-link:focus {
+    top: 1rem;
+  }
+
+  .live-dot {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
 
   .value-card {
@@ -38,23 +78,29 @@
       transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
       box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
+}
 
+@media (hover: hover) and (pointer: fine) {
   .value-card:hover {
     transform: translateY(-6px);
     box-shadow:
       0 20px 25px -5px rgb(0 0 0 / 0.08),
       0 8px 10px -6px rgb(0 0 0 / 0.08);
   }
+}
 
-  .nav-link {
-    @apply transition-colors duration-200;
+body.menu-open .sticky-offer {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 
-  .nav-link:hover {
-    @apply text-amber-brand;
-  }
-
-  .market-stat {
-    @apply transition-all duration-200;
+  .live-dot,
+  .value-card {
+    animation: none !important;
+    transition: none !important;
   }
 }

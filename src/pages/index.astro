@@ -1,24 +1,19 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Nav from '../components/Nav.astro';
+import SiteFrame from '../components/SiteFrame.astro';
 import Hero from '../components/Hero.astro';
 import WhySection from '../components/WhySection.astro';
 import UseCasesSection from '../components/UseCasesSection.astro';
 import MarketSection from '../components/MarketSection.astro';
+import ProcessStrip from '../components/ProcessStrip.astro';
 import AcquisitionCTA from '../components/AcquisitionCTA.astro';
-import PortfolioSection from '../components/PortfolioSection.astro';
-import Footer from '../components/Footer.astro';
+import { OG_IMAGE } from '../config/site';
 ---
 
-<BaseLayout>
-  <Nav />
-  <main>
-    <Hero />
-    <WhySection />
-    <UseCasesSection />
-    <MarketSection />
-    <AcquisitionCTA />
-    <PortfolioSection />
-    <Footer />
-  </main>
-</BaseLayout>
+<SiteFrame preloadImage={OG_IMAGE}>
+  <Hero />
+  <WhySection />
+  <UseCasesSection />
+  <MarketSection />
+  <ProcessStrip />
+  <AcquisitionCTA />
+</SiteFrame>

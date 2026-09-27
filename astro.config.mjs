@@ -10,11 +10,26 @@ export default defineConfig({
     tailwind({
       applyBaseStyles: false,
     }),
-    sitemap(),
+    sitemap({
+      filter: (page) => !page.includes('/404'),
+      serialize(item) {
+        const url = item.url;
+        if (url === 'https://sdlrealtor.com/' || url === 'https://sdlrealtor.com') {
+          item.priority = 1;
+        } else if (url.includes('/acquire/')) {
+          item.priority = 0.9;
+        } else if (url.includes('/scottsdale-realtor-domain/')) {
+          item.priority = 0.8;
+        } else if (url.includes('/faq/')) {
+          item.priority = 0.6;
+        }
+        item.changefreq = 'weekly';
+        item.lastmod = '2026-09-27';
+        return item;
+      },
+    }),
   ],
   image: {
-    remotePatterns: [
-      { protocol: 'https', hostname: 'imagedelivery.net' },
-    ],
+    remotePatterns: [{ protocol: 'https', hostname: 'imagedelivery.net' }],
   },
 });

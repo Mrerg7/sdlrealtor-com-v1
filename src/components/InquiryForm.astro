@@ -1,0 +1,173 @@
+---
+import { SITE, USE_OPTIONS } from '../config/site';
+
+interface Props {
+  id?: string;
+}
+
+const { id = 'inquiry' } = Astro.props;
+---
+
+<form id={id} data-inquiry class="scroll-mt-24" novalidate>
+  <div class="grid sm:grid-cols-2 gap-4">
+    <div>
+      <label class="field-label" for={`${id}-name`}>Name</label>
+      <input id={`${id}-name`} name="name" type="text" autocomplete="name" required maxlength="80" class="field-input" />
+    </div>
+    <div>
+      <label class="field-label" for={`${id}-email`}>Email</label>
+      <input id={`${id}-email`} name="email" type="email" inputmode="email" autocomplete="email" required maxlength="120" class="field-input" />
+    </div>
+    <div>
+      <label class="field-label" for={`${id}-phone`}>Phone <span class="font-normal text-slate-400">(optional)</span></label>
+      <input id={`${id}-phone`} name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="40" class="field-input" />
+    </div>
+    <div>
+      <label class="field-label" for={`${id}-use`}>Intended use</label>
+      <select id={`${id}-use`} name="use" required class="field-input">
+        <option value="">Select one</option>
+        {USE_OPTIONS.map((option) => <option value={option.value}>{option.label}</option>)}
+      </select>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <label class="field-label" for={`${id}-offer`}>Offer in USD <span class="font-normal text-slate-400">(optional — leave blank to request pricing)</span></label>
+    <input id={`${id}-offer`} name="offer" type="text" inputmode="decimal" maxlength="20" placeholder="e.g. 25000" class="field-input" />
+  </div>
+
+  <div class="mt-4">
+    <label class="field-label" for={`${id}-message`}>Note <span class="font-normal text-slate-400">(optional)</span></label>
+    <textarea id={`${id}-message`} name="message" rows="4" maxlength="1000" class="field-input min-h-28 py-3"></textarea>
+  </div>
+
+  <div class="absolute -left-[9999px]" aria-hidden="true">
+    <label for={`${id}-company`}>Company website</label>
+    <input id={`${id}-company`} name="company" type="text" tabindex="-1" autocomplete="off" />
+  </div>
+
+  <p class="form-error mt-3 text-sm text-red-700 hidden" role="alert"></p>
+
+  <button type="submit" class="mt-5 inline-flex w-full items-center justify-center h-12 px-6 rounded-2xl bg-slate-900 text-white font-semibold hover:bg-black transition-colors">
+    Send inquiry
+  </button>
+  <p class="mt-3 text-xs text-slate-500 leading-relaxed">
+    Opens your email app with a ready-to-send note to {SITE.email}. Nothing is stored on this website.
+  </p>
+
+  <div class="form-success hidden mt-5 rounded-2xl border border-emerald-200 bg-emerald-50 p-4">
+    <p class="font-semibold text-emerald-950">Your email draft is ready.</p>
+    <p class="mt-1 text-sm text-emerald-900">
+      If a mail app did not open, copy the note below and send it to {SITE.email}.
+    </p>
+    <textarea class="form-preview mt-3 w-full min-h-36 rounded-xl border border-emerald-200 bg-white p-3 text-sm text-slate-800" readonly></textarea>
+    <button type="button" class="copy-inquiry mt-3 inline-flex h-11 items-center justify-center px-4 rounded-xl border border-emerald-300 bg-white text-sm font-semibold text-emerald-950">
+      Copy inquiry
+    </button>
+  </div>
+</form>
+
+<script define:vars={{ email: SITE.email }}>
+  const useLabels = {
+    'top-realtor': 'Personal brand — luxury realtor',
+    'boutique-brokerage': 'Boutique brokerage or team',
+    'luxury-marketing': 'Luxury marketing or listing brand',
+    'neighborhood-specialist': 'Neighborhood specialist',
+    'investment-development': 'Investment or development brand',
+    'relocation-brand': 'Relocation or national brand',
+    hold: 'Investment hold',
+    other: 'Other',
+  };
+
+  function field(form, name) {
+    const el = form.elements.namedItem(name);
+    return el && 'value' in el ? String(el.value).trim() : '';
+  }
+
+  function compose(form) {
+    const name = field(form, 'name');
+    const from = field(form, 'email');
+    const phone = field(form, 'phone');
+    const use = field(form, 'use');
+    const offer = field(form, 'offer');
+    const message = field(form, 'message');
+    const useLabel = useLabels[use] || use;
+    const lines = [
+      'Hello,',
+      '',
+      'I am interested in acquiring sdlrealtor.com.',
+      '',
+      `Name: ${name}`,
+      `Email: ${from}`,
+      `Phone: ${phone || '—'}`,
+      `Intended use: ${useLabel}`,
+      `Offer (USD): ${offer || 'Please share pricing / next steps'}`,
+      '',
+      message ? `Note:\n${message}` : '',
+      '',
+      'Thank you.',
+    ];
+    return lines.filter((line, index, all) => !(line === '' && all[index - 1] === '')).join('\n');
+  }
+
+  function bind(form) {
+    if (form.dataset.bound === '1') return;
+    form.dataset.bound = '1';
+    const error = form.querySelector('.form-error');
+    const success = form.querySelector('.form-success');
+    const preview = form.querySelector('.form-preview');
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      success?.classList.add('hidden');
+      if (field(form, 'company')) return;
+
+      const name = field(form, 'name');
+      const from = field(form, 'email');
+      const use = field(form, 'use');
+      const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(from);
+
+      if (name.length < 2 || !validEmail || !use) {
+        error.textContent = 'Add your name, a valid email, and how you would use the domain.';
+        error.classList.remove('hidden');
+        const invalid = !name ? form.elements.namedItem('name') : !validEmail ? form.elements.namedItem('email') : form.elements.namedItem('use');
+        invalid?.focus();
+        return;
+      }
+
+      error.classList.add('hidden');
+      const body = compose(form);
+      if (preview) preview.value = body;
+      success?.classList.remove('hidden');
+
+      const href = `mailto:${email}?subject=${encodeURIComponent('sdlrealtor.com Domain Acquisition Inquiry')}&body=${encodeURIComponent(body)}`;
+      const link = document.createElement('a');
+      link.href = href;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    });
+
+    form.querySelector('.copy-inquiry')?.addEventListener('click', async () => {
+      const text = preview?.value || '';
+      const button = form.querySelector('.copy-inquiry');
+      try {
+        await navigator.clipboard.writeText(text);
+        if (button) button.textContent = 'Copied';
+      } catch {
+        preview?.focus();
+        preview?.select();
+        if (button) button.textContent = 'Select the note and copy it';
+      }
+    });
+  }
+
+  document.querySelectorAll('form[data-inquiry]').forEach((form) => bind(form));
+
+  const requested = new URLSearchParams(location.search).get('use');
+  if (requested && Object.prototype.hasOwnProperty.call(useLabels, requested)) {
+    document.querySelectorAll('select[name="use"]').forEach((select) => {
+      select.value = requested;
+    });
+  }
+</script>
